@@ -112,3 +112,21 @@ class HashTable {
         return valuesArray;
     }
 }
+
+const hashTable = new HashTable();
+
+hashTable.set("name", "John");
+hashTable.set("age", 30);
+hashTable.set("city", "New York");
+
+console.log(hashTable.get("name")); // Output: John
+console.log(hashTable.contains("age")); // Output: true
+
+hashTable.remove("city");
+console.log(hashTable.get("city")); // Output: undefined
+
+console.log(hashTable.keys()); // Output: ['name', 'age']
+console.log(hashTable.values()); // Output: ['John', 30]
+
+hashTable.clear();
+console.log(hashTable.isEmpty()); // Output: true

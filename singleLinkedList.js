@@ -429,3 +429,24 @@ class SinglyLinkedList {
         return arr;
     }
 }
+
+const list = new SinglyLinkedList();
+console.log(list.isEmpty()); // Output: true
+list.insertAtBack(1);
+list.insertAtBack(2);
+list.insertAtBack(3);
+list.removeVal(2);
+console.log(list.toArr()); // Output: [1, 3]
+list.insertAtBack(2);
+console.log(list.average()); // Output: 2
+
+const list1 = new SinglyLinkedList();
+list1.insertAtBack(1);
+list1.insertAtBack(2);
+
+const list2 = new SinglyLinkedList();
+list2.insertAtBack(3);
+list2.insertAtBack(4);
+
+list1.concat(list2);
+console.log(list1.toArr()); // Output: [1, 2, 3, 4]

@@ -402,3 +402,19 @@ class BinarySearchTree {
     }
 
 }
+
+const bst = new BinarySearchTree();
+console.log(bst.isEmpty()); // Output: true
+bst.insert(5);
+bst.insert(2);
+bst.insert(7);
+bst.insert(1);
+bst.insert(4);
+
+const sortedList = bst.toArrInorder();
+console.log(sortedList); // Output: [1, 2, 4, 5, 7]
+console.log(bst.contains(7)); // Output: true
+console.log(bst.contains(3)); // Output: false
+console.log(bst.min()); // Output: 1
+console.log(bst.max()); // Output: 7
+console.log(bst.isEmpty()); // Output: false

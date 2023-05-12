@@ -32,3 +32,19 @@ class NaryTree {
         }
     }
 }
+
+const tree = new NaryTree('A');
+const nodeB = new Node('B');
+const nodeC = new Node('C');
+const nodeD = new Node('D');
+const nodeE = new Node('E');
+const nodeF = new Node('F');
+
+tree.root.addChild(nodeB);
+tree.root.addChild(nodeC);
+nodeB.addChild(nodeD);
+nodeB.addChild(nodeE);
+nodeC.addChild(nodeF);
+
+tree.traverseDFS(); // Output: A B D E C F
+tree.traverseBFS(); // Output: A B C D E F

@@ -317,3 +317,20 @@ class DoublyLinkedList {
 
 
 }
+
+
+const doublyLinkedList = new DoublyLinkedList();
+doublyLinkedList.append(10);
+doublyLinkedList.append(20);
+doublyLinkedList.append(30);
+doublyLinkedList.prepend(5);
+doublyLinkedList.insert(15, 2);
+
+console.log(doublyLinkedList.toArray()); // [5, 10, 15, 20, 30]
+
+console.log(doublyLinkedList.removeAt(3)); // 20
+
+console.log(doublyLinkedList.contains(10)); // true
+console.log(doublyLinkedList.contains(50)); // false
+
+console.log(doublyLinkedList.toString()); // "5, 10, 15, 30"
