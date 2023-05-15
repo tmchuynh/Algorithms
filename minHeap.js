@@ -82,7 +82,7 @@ class MinHeap {
      */
     insert(num) {
         this.heap.push(num);
-        let currentIndex = this.heap.length - 1;
+        let currentIndex = this.size();
 
         while (currentIndex > 1) {
             const parentIndex = this.idxOfParent(currentIndex);
@@ -93,8 +93,7 @@ class MinHeap {
                 break;
             }
 
-            this.heap[currentIndex] = parentElement;
-            this.heap[parentIndex] = currentElement;
+            this.swap(currentIndex, parentIndex);
             currentIndex = parentIndex;
         }
     }
