@@ -99,6 +99,46 @@ class MinHeap {
     }
 
     /**
+    * Extracts the min num from the heap and then re-orders the heap to
+    * maintain order so the next min is ready to be extracted.
+    * 1. Save the first node to a temp var.
+    * 2. Pop last node off and set idx1 equal to the popped value.
+    * 3. Iteratively swap the old last node that is now at idx1 with it's
+    *    smallest child IF the smallest child is smaller than it.
+    * - Time: O(log n) logarithmic due to shiftDown.
+    * - Space: O(1) constant.
+    * @returns {?number} The min number or null if empty.
+    */
+    extract() {
+        if (this.heap === 1) {
+            return null;
+        }
+        const min = this.heap[1];
+        this.heap[1] = this.heap.pop();
+        let current = 1;
+
+        const leftChild = this.idxOfLeftChild(current);
+        const rightChild = this.idxOfRightChild(current);
+
+
+        while (
+            (this.heap[leftChild] && this.heap[current] > this.heap[leftChild]) ||
+            (this.heap[rightChild] && this.heap[current] > this.heap[rightChild])
+        ) {
+            if (this.heap[rightChild] && this.heap[rightChild] < this.heap[leftChild]) {
+                this.swap(current, rightChild);
+                current = rightChild;
+            } else {
+                this.swap(current, leftChild);
+                current = leftChild;
+            }
+            leftChild = this.idxOfLeftChild(current);
+            rightChild = this.idxOfRightChild(current);
+        }
+        return min;
+    }
+
+    /**
      * Logs the tree horizontally with the root on the left and the index in
      * parenthesis using reverse inorder traversal.
      */
