@@ -117,24 +117,43 @@ class MinHeap {
         this.heap[1] = this.heap.pop();
         let current = 1;
 
-        const leftChild = this.idxOfLeftChild(current);
-        const rightChild = this.idxOfRightChild(current);
+        while (true) {
+            const leftChild = this.idxOfLeftChild(current);
+            const rightChild = this.idxOfRightChild(current);
 
+            let smallerChild = null;
 
-        while (
-            (this.heap[leftChild] && this.heap[current] > this.heap[leftChild]) ||
-            (this.heap[rightChild] && this.heap[current] > this.heap[rightChild])
-        ) {
-            if (this.heap[rightChild] && this.heap[rightChild] < this.heap[leftChild]) {
-                this.swap(current, rightChild);
-                current = rightChild;
-            } else {
-                this.swap(current, leftChild);
-                current = leftChild;
+            if (leftChild <= this.size()) {
+                smallerChild = leftChild;
             }
-            leftChild = this.idxOfLeftChild(current);
-            rightChild = this.idxOfRightChild(current);
+
+            if (rightChild <= this.size() && this.heap[rightChild] < this.heap[leftChild]) {
+                smallerChild = rightChild;
+            }
+
+            if (smallerChild && this.heap[smallerChild] < this.heap[1]) {
+                this.heap[current] = this.heap[smallerChild];
+                current = smallerChild;
+            } else {
+                break;
+            }
         }
+        this.heap[current] = this.heap[1];
+
+        // while(
+        //   (this.heap[leftChild] && this.heap[current] > this.heap[leftChild]) ||
+        //   (this.heap[rightChild] && this.heap[current] > this.heap[rightChild])
+        // ) {
+        //   if (this.heap[rightChild] && this.heap[rightChild] < this.heap[leftChild]) {
+        //     this.swap(current,rightChild);
+        //     current = rightChild;
+        //   } else {
+        //     this.swap(current, leftChild);
+        //     current = leftChild;
+        //   }
+        //   leftChild = this.idxOfLeftChild(current);
+        //   rightChild = this.idxOfRightChild(current);
+        // }
         return min;
     }
 
