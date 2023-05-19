@@ -116,6 +116,29 @@ class DoublyLinkedList {
         this.length++;
     }
 
+    removeMiddleNode() {
+        if (this.size > 0 && this.size % 2 !== 0) {
+            const middleNode = Math.floor(this.size / 2);
+            let count = 1;
+            let current = this.head;
+            //move to the middle node
+            while (count <= middleNode) {
+                current = current.next;
+                count++
+            }
+            //remove the node
+            current.prev.next = current.next;
+            current.next.prev = current.prev;
+            current.next = null;
+            current.prev = null;
+            this.size--
+
+            return current.data;
+        } else {
+            return null
+        }
+    }
+
 
     moveMinToFront() {
         if (this.isEmpty() || this.length === 1) {
