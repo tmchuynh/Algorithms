@@ -100,6 +100,35 @@ class DoublyLinkedList {
         this.size++;
     }
 
+    insertAfter(targetVal, newVal) {
+        if (this.isEmpty()) {
+            return false;
+        }
+
+
+        const newNode = new Node(newVal);
+        let runner = this.head;
+
+        while (runner != null) {
+            if (runner.data == targetVal) {
+                newNode.prev = runner;
+                newNode.next = runner.next;
+
+                if (runner.next) {
+                    runner.next.prev = newNode;
+                } else {
+                    this.tail = newNode;
+                }
+
+                runner.next = newNode;
+                return true;
+            }
+            runner = runner.next;
+        }
+        return false;
+
+    }
+
 
     insertAtBack(data) {
         const newNode = new Node(data);
