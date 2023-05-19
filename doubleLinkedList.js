@@ -107,23 +107,37 @@ class DoublyLinkedList {
 
 
         const newNode = new Node(newVal);
-        let runner = this.head;
+        let headRunner = this.head;
+        let tailRunner = this.tail;
 
-        while (runner != null) {
+        while (headRunner != null && tailRunner != && headRunner !== tailRunner.next) {
             if (runner.data == targetVal) {
-                newNode.prev = runner;
-                newNode.next = runner.next;
+                newNode.prev = headRunner;
+                newNode.next = headRunner.next;
 
-                if (runner.next) {
-                    runner.next.prev = newNode;
+                if (headRunner.next) {
+                    headRunner.next.prev = newNode;
                 } else {
                     this.tail = newNode;
                 }
 
-                runner.next = newNode;
+                headRunner.next = newNode;
                 return true;
             }
-            runner = runner.next;
+            if (tailRunner.data == targetVal) {
+                newNode.next = tailRunner;
+                newNode.prev = tailRunner.prev;
+
+                if (tailRunner.prev) {
+                    tailRunner.prev.next = newNode;
+                } else {
+                    this.head = newNode;
+                }
+                tailRunner.prev = newNode;
+                return true;
+            }
+            headRunner = headRunner.next;
+            tailRunner = tailRunner.prev;
         }
         return false;
 
