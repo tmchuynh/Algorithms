@@ -159,6 +159,51 @@ class DoublyLinkedList {
         this.size++;
     }
 
+    insertBefore(targetVal, newVal) {
+        if (this.isEmpty()) {
+            return false;
+        }
+
+        const newNode = new Node(newVal);
+        let headRunner = this.head;
+        let tailRunner = this.tail;
+
+        while (headRunner !== null && tailRunner !== null && headRunner !== tailRunner.next) {
+            if (headRunner.data === targetVal) {
+                newNode.next = headRunner;
+                newNode.prev = headRunner.prev;
+
+                if (headRunner.prev) {
+                    headRunner.prev.next = newNode;
+                } else {
+                    this.head = newNode;
+                }
+
+                headRunner.prev = newNode;
+                return true;
+            }
+
+            if (tailRunner.data === targetVal) {
+                newNode.prev = tailRunner;
+                newNode.next = tailRunner.next;
+
+                if (tailRunner.next) {
+                    tailRunner.next.prev = newNode;
+                } else {
+                    this.tail = newNode;
+                }
+
+                tailRunner.next = newNode;
+                return true;
+            }
+
+            headRunner = headRunner.next;
+            tailRunner = tailRunner.prev;
+        }
+
+        return false;
+    }
+
     insertAtBackMany(items = []) {
         items.forEach((item) => this.insertAtBack(item));
         return this;
