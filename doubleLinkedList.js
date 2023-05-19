@@ -105,42 +105,35 @@ class DoublyLinkedList {
             return false;
         }
 
-
         const newNode = new Node(newVal);
         let headRunner = this.head;
         let tailRunner = this.tail;
 
-        while (headRunner != null && tailRunner != && headRunner !== tailRunner.next) {
+        while (headRunner != null && tailRunner != null && headRunner !== tailRunner.next) {
             if (runner.data == targetVal) {
-                newNode.prev = headRunner;
-                newNode.next = headRunner.next;
-
-                if (headRunner.next) {
-                    headRunner.next.prev = newNode;
-                } else {
-                    this.tail = newNode;
-                }
-
-                headRunner.next = newNode;
-                return true;
+                return this.insertNodeAfter(headRunner, newNode);
             }
             if (tailRunner.data == targetVal) {
-                newNode.next = tailRunner;
-                newNode.prev = tailRunner.prev;
-
-                if (tailRunner.prev) {
-                    tailRunner.prev.next = newNode;
-                } else {
-                    this.head = newNode;
-                }
-                tailRunner.prev = newNode;
-                return true;
+                return this.insertNodeAfter(tailRunner, newNode);
             }
             headRunner = headRunner.next;
             tailRunner = tailRunner.prev;
         }
         return false;
 
+    }
+
+    insertNodeAfter(node, newNode) {
+        newNode.prev = node;
+        newNode.next = node.next;
+
+        if (node.next) {
+            node.next.prev = newNode;
+        } else {
+            this.tail = newNode;
+        }
+        node.next = newNode;
+        return true;
     }
 
 
