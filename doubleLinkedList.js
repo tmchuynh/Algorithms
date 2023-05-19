@@ -1,7 +1,7 @@
 class Node {
     constructor(data) {
         this.data = data;
-        this.previous = null;
+        this.prev = null;
         this.next = null;
     }
 }
@@ -10,17 +10,17 @@ class DoublyLinkedList {
     constructor() {
         this.head = null;
         this.tail = null;
-        this.length = 0;
+        this.size = 0;
     }
 
 
     isEmpty() {
-        return this.length === 0;
+        return this.size === 0;
     }
 
 
-    getLength() {
-        return this.length;
+    getsize() {
+        return this.size;
     }
 
 
@@ -31,12 +31,12 @@ class DoublyLinkedList {
             this.head = newNode;
             this.tail = newNode;
         } else {
-            newNode.previous = this.tail;
+            newNode.prev = this.tail;
             this.tail.next = newNode;
             this.tail = newNode;
         }
 
-        this.length++;
+        this.size++;
     }
 
 
@@ -48,22 +48,22 @@ class DoublyLinkedList {
             this.tail = newNode;
         } else {
             newNode.next = this.head;
-            this.head.previous = newNode;
+            this.head.prev = newNode;
             this.head = newNode;
         }
 
-        this.length++;
+        this.size++;
     }
 
 
     insert(data, index) {
-        if (index < 0 || index > this.length) {
+        if (index < 0 || index > this.size) {
             throw new Error('Index out of bounds');
         }
 
         if (index === 0) {
             this.prepend(data);
-        } else if (index === this.length) {
+        } else if (index === this.size) {
             this.append(data);
         } else {
             const newNode = new Node(data);
@@ -75,12 +75,12 @@ class DoublyLinkedList {
                 count++;
             }
 
-            newNode.previous = current;
+            newNode.prev = current;
             newNode.next = current.next;
-            current.next.previous = newNode;
+            current.next.prev = newNode;
             current.next = newNode;
 
-            this.length++;
+            this.size++;
         }
     }
 
@@ -93,11 +93,11 @@ class DoublyLinkedList {
             this.tail = newNode;
         } else {
             newNode.next = this.head;
-            this.head.previous = newNode;
+            this.head.prev = newNode;
             this.head = newNode;
         }
 
-        this.length++;
+        this.size++;
     }
 
 
@@ -108,12 +108,17 @@ class DoublyLinkedList {
             this.head = newNode;
             this.tail = newNode;
         } else {
-            newNode.previous = this.tail;
+            newNode.prev = this.tail;
             this.tail.next = newNode;
             this.tail = newNode;
         }
 
-        this.length++;
+        this.size++;
+    }
+
+    insertAtBackMany(items = []) {
+        items.forEach((item) => this.insertAtBack(item));
+        return this;
     }
 
     removeMiddleNode() {
@@ -141,7 +146,7 @@ class DoublyLinkedList {
 
 
     moveMinToFront() {
-        if (this.isEmpty() || this.length === 1) {
+        if (this.isEmpty() || this.size === 1) {
             return;
         }
 
@@ -160,16 +165,16 @@ class DoublyLinkedList {
         }
 
         if (minNode === this.tail) {
-            this.tail = minNode.previous;
+            this.tail = minNode.prev;
             this.tail.next = null;
         } else {
-            minNode.previous.next = minNode.next;
-            minNode.next.previous = minNode.previous;
+            minNode.prev.next = minNode.next;
+            minNode.next.prev = minNode.prev;
         }
 
-        minNode.previous = null;
+        minNode.prev = null;
         minNode.next = this.head;
-        this.head.previous = minNode;
+        this.head.prev = minNode;
         this.head = minNode;
     }
 
@@ -182,19 +187,19 @@ class DoublyLinkedList {
                 if (current === this.head) {
                     this.head = current.next;
                     if (this.head) {
-                        this.head.previous = null;
+                        this.head.prev = null;
                     }
                 } else if (current === this.tail) {
-                    this.tail = current.previous;
+                    this.tail = current.prev;
                     this.tail.next = null;
                 } else {
-                    current.previous.next = current.next;
-                    current.next.previous = current.previous;
+                    current.prev.next = current.next;
+                    current.next.prev = current.prev;
                 }
 
-                current.previous = null;
+                current.prev = null;
                 current.next = null;
-                this.length--;
+                this.size--;
 
                 return;
             }
@@ -205,7 +210,7 @@ class DoublyLinkedList {
 
 
     removeAt(index) {
-        if (index < 0 || index >= this.length) {
+        if (index < 0 || index >= this.size) {
             throw new Error('Index out of bounds');
         }
 
@@ -214,39 +219,39 @@ class DoublyLinkedList {
         if (index === 0) {
             removedNode = this.head;
 
-            if (this.length === 1) {
+            if (this.size === 1) {
                 this.head = null;
                 this.tail = null;
             } else {
                 this.head = this.head.next;
-                this.head.previous = null;
+                this.head.prev = null;
             }
-        } else if (index === this.length - 1) {
+        } else if (index === this.size - 1) {
             removedNode = this.tail;
-            this.tail = this.tail.previous;
+            this.tail = this.tail.prev;
             this.tail.next = null;
         } else {
             let current;
-            if (index < this.length / 2) {
+            if (index < this.size / 2) {
                 current = this.head;
                 for (let i = 0; i < index; i++) {
                     current = current.next;
                 }
             } else {
                 current = this.tail;
-                for (let i = this.length - 1; i > index; i--) {
-                    current = current.previous;
+                for (let i = this.size - 1; i > index; i--) {
+                    current = current.prev;
                 }
             }
 
             removedNode = current;
-            current.previous.next = current.next;
-            current.next.previous = current.previous;
+            current.prev.next = current.next;
+            current.next.prev = current.prev;
         }
 
-        removedNode.previous = null;
+        removedNode.prev = null;
         removedNode.next = null;
-        this.length--;
+        this.size--;
 
         return removedNode.data;
     }
@@ -260,21 +265,21 @@ class DoublyLinkedList {
                 if (current === this.head) {
                     this.head = this.head.next;
                     if (this.head) {
-                        this.head.previous = null;
+                        this.head.prev = null;
                     }
                 } else if (current === this.tail) {
-                    this.tail = this.tail.previous;
+                    this.tail = this.tail.prev;
                     this.tail.next = null;
                 } else {
-                    const prevNode = current.previous;
+                    const prevNode = current.prev;
                     const nextNode = current.next;
                     prevNode.next = nextNode;
-                    nextNode.previous = prevNode;
+                    nextNode.prev = prevNode;
                 }
 
-                current.previous = null;
+                current.prev = null;
                 current.next = null;
-                this.length--;
+                this.size--;
 
                 return current.data;
             }
